@@ -13,11 +13,18 @@ $(window).on('load', function() {
     $.getJSON(url, function(jsonData) {
           $.each(jsonData, function(key, data) {
             let latLng = new google.maps.LatLng(data.latitude, data.longitude);
-            var marker = new google.maps.Marker({
+            let marker = new google.maps.Marker({
                 position: latLng,
                 title: data.ssid
             });
+            let wifiInfo = "This WiFi's name is " + data.ssid;
+            let infoWindow = new google.maps.InfoWindow({
+                content: wifiInfo
+            });
             marker.setMap(map);
+            marker.addListener('click', function(){
+                infoWindow.open(map, marker);
+            });
           });
     });
 });
